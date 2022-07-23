@@ -15,11 +15,6 @@ RSpec.describe User, type: :model do
     expect(@user).not_to be_valid
   end
 
-  it 'name should be string' do
-    @user.name = 1
-    expect(@user).not_to be_valid
-  end
-
   it 'photo should be string' do
     @user.photo = 1
     expect(@user).not_to be_valid
@@ -33,11 +28,6 @@ RSpec.describe User, type: :model do
   it 'posts_counter should be greater than or equal to 0' do
     @user.posts_counter = -1
     expect(@user).not_to be_valid
-  end
-
-  it 'posts_counter is be greater than or eq to zero' do
-    @user.posts_counter = 2
-    expect(@user).to be_valid
   end
 
   it 'posts_counter should return less than 3 posts' do
