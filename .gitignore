@@ -7,9 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# .gitignore_global
-node_modules/
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -24,11 +21,19 @@ node_modules/
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
-/tmp/storage/*
-!/tmp/storage/
-!/tmp/storage/.keep
 
 /public/assets
+.byebug_history
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+.rubocop.yml
+.stylelintrc.json
