@@ -42,7 +42,7 @@ run the program functions
 👤 **Melaku Eshetu**
 
 - GitHub: [Melaku05](https://github.com/Melaku05)
-- Twitter: [devMo7amed](https://twitter.com/melaku_mel)
+- Twitter: [melaku05](https://twitter.com/melaku_mel)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/melaku-eshetu/)
 
 ## 🤝 Contributing
