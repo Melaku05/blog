@@ -5,6 +5,6 @@ class UsersController < ApplicationController
 
   def show
     @users = User.find(params[:id])
-    @posts = @users.most_recent_posts 
+    @posts = @users.most_recent_posts
   end
 end
