@@ -16,10 +16,6 @@ RSpec.describe 'Posts', type: :request do
     it 'Should render index template' do
       expect(response).to render_template(:index)
     end
-
-    it 'Should have text Index Posts' do
-      expect(response.body).to include('Index Posts')
-    end
   end
 
   describe 'GET /posts/:id' do
@@ -31,10 +27,6 @@ RSpec.describe 'Posts', type: :request do
 
     it 'Should render show template' do
       expect(response).to render_template(:show)
-    end
-
-    it 'Should have text Show Post' do
-      expect(response.body).to include('Show Post')
     end
   end
 end

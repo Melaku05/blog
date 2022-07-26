@@ -13,25 +13,6 @@ RSpec.describe 'Post show', type: :feature do
       @comment1 = Comment.first!
       @comment2 = Comment.second!
 
-      # @first_user = User.create(name: 'Tom', photo: 'margaret.jpeg', bio: 'Teacher from Mexico.', posts_counter: 0)
-      # @first_user.save!
-      # @second_user = User.create(name: 'Lilly', photo: 'margaret.jpeg', bio: 'Teacher from Poland.', posts_counter: 0)
-      # @second_user.save!
-      # visit root_path
-      #
-      # @first_post = Post.create(author: @first_user, title: 'Hello', text: 'This is my first post',
-      #                           comments_counter: 0, likes_counter: 0)
-      # @second_post = Post.create(author: @first_user, title: 'Hello, again', text: 'This is my second post',
-      #                            comments_counter: 0, likes_counter: 0)
-      # @third_post = Post.create(author: @second_user, title: 'Hello', text: 'This is my first post',
-      #                           comments_counter: 0, likes_counter: 0)
-      # @fourth_post = Post.create(author: @second_user, title: 'Hello, again', text: 'This is my second post',
-      #                            comments_counter: 0, likes_counter: 0)
-      #
-      # @comment1 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom!')
-      # @comment2 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom Again!')
-      # @comment3 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom Again twice!')
-
       visit user_post_path(@first_user, @first_post)
     end
 

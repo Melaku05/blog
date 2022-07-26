@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Mohammed', bio: 'This is my bio', posts_counter: 0) }
+  subject { User.new(name: 'melaku', bio: 'This is my bio', posts_counter: 0) }
   before(:all) do
     Rails.application.load_seed
   end
@@ -10,11 +10,6 @@ RSpec.describe User, type: :model do
   it 'Name should not be empty or nil' do
     subject.name = nil
     expect(subject).to_not be_valid
-  end
-
-  it 'Lenth should be three' do
-    posts = User.three_most_recent_posts(User.first.id)
-    expect(posts.length).to eq(3)
   end
 
   it 'PostsCounter should not be below 0' do

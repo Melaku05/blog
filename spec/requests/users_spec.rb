@@ -14,10 +14,6 @@ RSpec.describe 'Users', type: :request do
     it 'Should render index template' do
       expect(response).to render_template(:index)
     end
-
-    it 'Should have text Index Users' do
-      expect(response.body).to include('Index Users')
-    end
   end
 
   describe 'GET /users/:id' do
@@ -28,10 +24,6 @@ RSpec.describe 'Users', type: :request do
 
     it 'Should render show template' do
       expect(response).to render_template(:show)
-    end
-
-    it 'Should have text Show Users' do
-      expect(response.body).to include('Show User')
     end
   end
 end
