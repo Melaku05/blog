@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
   def index
-    @user = User.find_by(id: params[:user_id])
-    @posts = Post.all.where(author_id: params[:user_id])
+    @user = User.find(params[:user_id])
+    @posts = @user.posts
   end
 
   def show
-    @post = Post.where(author_id: params[:user_id]).where(id: params[:id])[0]
-    @current_user_id = current_user.id
+    @user = User.find(params[:user_id])
+    @post = @user.posts.find(params[:id])
   end
 
   def new
@@ -14,29 +14,20 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.author_id = params[:user_id]
-    if @post.save
-      @post.update_counter
-      flash[:success] = 'Object successfully created'
-      redirect_to user_post_path(id: @post.id, user_id: @post.author_id)
-    else
-      flash[:error] = 'Something went wrong'
-      render 'new'
+    post_params = params.require(:post).permit(:title, :text)
+    @post = Post.new(title: post_params[:title], text: post_params[:text], comments_counter: 0, likes_counter: 0,
+                     author_id: current_user.id)
+
+    respond_to do |format|
+      format.html do
+        if @post.save
+          flash[:success] = 'Post saved successfully'
+          redirect_to user_posts_path(current_user.id)
+        else
+          flash[:error] = 'Post could not be saved'
+          render :new, locals: { post: @post }
+        end
+      end
     end
-  end
-
-  def like
-    @user = User.find_by(id: params[:user_id])
-    @post = Post.find_by(id: params[:id], author_id: params[:user_id])
-    @like = Like.create(post_id: @post.id, Author_id: current_user.id)
-    @like.update_likes_counter
-    redirect_to user_post_path(@user, @post)
-  end
-
-  private
-
-  def post_params
-    params.require(:post).permit(:Title, :Text)
   end
 end

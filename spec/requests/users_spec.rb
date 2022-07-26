@@ -1,31 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  describe 'GET #index' do
-    before(:example) { get users_path }
-    it 'is a success' do
-      expect(response).to have_http_status(:ok)
-    end
-    it "renders 'index' template" do
-      expect(response).to render_template('index')
+  before(:all) do
+    Rails.application.load_seed
+  end
+
+  describe 'GET /users' do
+    before { get users_path }
+    it 'returns a 200 status code' do
+      expect(response).to have_http_status(200)
     end
 
-    it 'has a text in the view' do
-      expect(response.body).to include('Find me in app/views/users/index.html.erb')
+    it 'Should render index template' do
+      expect(response).to render_template(:index)
+    end
+
+    it 'Should have text Index Users' do
+      expect(response.body).to include('Index Users')
     end
   end
 
-  describe 'GET #show' do
-    before(:example) { get '/users/show' }
-    it 'is a success' do
-      expect(response).to have_http_status(:ok)
-    end
-    it "renders 'show' template" do
-      expect(response).to render_template('show')
+  describe 'GET /users/:id' do
+    before { get user_path(1) }
+    it 'returns a 200 status code' do
+      expect(response).to have_http_status(200)
     end
 
-    it 'has a text in the view' do
-      expect(response.body).to include('Find me in app/views/users/show.html.erb')
+    it 'Should render show template' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'Should have text Show Users' do
+      expect(response.body).to include('Show User')
     end
   end
 end

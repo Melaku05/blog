@@ -1,21 +1,30 @@
 {
-  "name": "blog-app",
-  "private": true,
-  "dependencies": {
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.3",
-    "turbolinks": "^5.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+  "name": "rails-blog",
+  "version": "1.0.0",
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   },
-  "version": "0.1.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mo7amedSMahdi/rails-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mo7amedSMahdi/rails-blog/issues"
+  },
+  "homepage": "https://github.com/Mo7amedSMahdi/rails-blog#readme",
   "devDependencies": {
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-csstree-validator": "^1.9.0",
-    "stylelint-scss": "^3.21.0",
-    "webpack-dev-server": "^3"
+    "stylelint-scss": "^3.21.0"
   }
 }
