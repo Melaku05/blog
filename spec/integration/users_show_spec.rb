@@ -1,67 +1,56 @@
 require 'rails_helper'
 
-RSpec.describe 'user#Show', type: :feature do
-  describe 'User' do
+RSpec.describe 'Test user show page', type: :feature do
+  describe 'GET show page' do
     before(:each) do
-      @melaku = User.create!(
-        name: 'melaku',
-        photo: 'm.jpg',
-        bio: 'Lorem ipsum dolor sit amet',
-        posts_counter: 0
-      )
-
-      @tom = User.create!(
-        name: 'tom',
-        photo: 'm.jpeg',
-        bio: 'Lorem ipsum dolor sit amet',
-        posts_counter: 0
-      )
-
-      visit root_path
-
-      @post1 = @melaku.posts.create!(title: 'Ruby and Rails 1', text: 'this is first post about Ruby and Rails! 1',
-                                     comments_counter: 0, likes_counter: 0)
-      @post2 = @melaku.posts.create!(title: 'Ruby and Rails 2', text: 'this is first post about Ruby and Rails! 2',
-                                     comments_counter: 0, likes_counter: 0)
-      @post3 = @melaku.posts.create!(title: 'Ruby and Rails 3', text: 'this is first post about Ruby and Rails! 3',
-                                     comments_counter: 0, likes_counter: 0)
-      @post4 = @melaku.posts.create!(title: 'Ruby and Rails 2', text: 'this is first post about Ruby and Rails! 2',
-                                     comments_counter: 0, likes_counter: 0)
-      @post5 = @melaku.posts.create!(title: 'Ruby and Rails 3', text: 'this is first post about Ruby and Rails! 3',
-                                     comments_counter: 0, likes_counter: 0)
-      visit user_path(@melaku.id)
+      @first_user = User.create(name: 'Lue', photo: 'test_photo.png', bio: 'bio', posts_counter: 0)
+      @first_user.save!
+      @first_post = Post.create(author: @first_user, title: 'So Awesome', text: 'I am Lue and it is great to be here See post details',
+                                comments_counter: 0, likes_counter: 0, id: 10)
+      @second_post = Post.create(author: @first_user, title: 'Holiday Time', text: 'I am traveling to Spain',
+                                 comments_counter: 0, likes_counter: 0, id: 11)
+      @third_post = Post.create(author: @first_user, title: 'Shopping', text: 'Paris, Milan, Moroco malls',
+                                comments_counter: 0, likes_counter: 0, id: 12)
+      @fourth_post = Post.create(author: @first_user, title: 'Great movies',
+                                 text: 'J park, T form, Fast n Fur', comments_counter: 0, likes_counter: 0, id: 13)
     end
-    it "show user's profile picture" do
-      all('img').each do |i|
-        expect(i[:src]).to eq('m.jpg')
+    scenario 'shows the correct content' do
+      visit user_path(id: @first_user.id)
+      sleep(5)
+      expect(page).to have_content('Fast n Fur')
+    end
+    feature 'User show page' do
+      background { visit user_path(id: @first_user.id) }
+      scenario 'See profile pic' do
+        expect(page.first('img')['src']).to eq('test_photo.png')
       end
-    end
-
-    it "show user's name" do
-      expect(page).to have_content 'melaku'
-    end
-
-    it 'show number of posts per user' do
-      user = User.first
-      expect(page).to have_content(user.posts_counter)
-    end
-
-    it "show user's bio." do
-      expect(page).to have_content('Lorem ipsum dolor sit amet')
-    end
-
-    it "show button that lets me view all of a user's posts." do
-      expect(page).to have_link('See all posts')
-    end
-
-    it "click post and redirect to that post's show page." do
-      click_link 'See all posts'
-      expect(page).to have_current_path user_posts_path(@melaku)
-    end
-
-    it "click see all posts and redirects to user's post's index page." do
-      click_link 'See all posts'
-      expect(page).to have_current_path user_posts_path(@melaku)
+      scenario 'Username is shown' do
+        expect(page).to have_content('Lue')
+      end
+      scenario 'See number of posts written by each user' do
+        expect(page).to have_content('Number of Posts: 4')
+      end
+      scenario "User's bio is visible" do
+        expect(page).to have_content('bio')
+      end
+      scenario 'See first three posts' do
+        visit user_path(id: @first_user.id)
+        expect(page).to have_content('Great movies')
+        visit user_path(id: @first_user.id)
+        expect(page).to have_content('Shopping')
+        visit user_path(id: @first_user.id)
+        expect(page).to have_content('Holiday Time')
+        visit user_path(id: @first_user.id)
+        expect(page).not_to have_content('So Awesome')
+      end
+      scenario 'View all post button is on screen' do
+        visit user_path(id: @first_user.id)
+        expect(page).to have_content('See all posts')
+      end
+      scenario 'When I click to see all posts, I am redirected to the users post index page' do
+        click_link 'See all posts'
+        expect(current_path).to eq user_posts_path(@first_user.id)
+      end
     end
   end
 end
