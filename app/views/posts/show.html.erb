@@ -25,5 +25,6 @@
                     <p><%= comment.author.name %>: <%= comment.text %></p>
                 <% end %>
             </div>
+            <%= link_to "See post details", user_post_path(@user.id), class: "btn btn-primary btn--center" %>
         </div>
 </div>

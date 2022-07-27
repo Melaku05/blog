@@ -68,9 +68,17 @@ end
 
 # Run against this stable release
 group :development, :test do
+  gem 'capybara'
   gem 'debase', '~> 0.2.5.beta2', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 6.0.0.rc1'
   gem 'ruby-debug-ide', require: false
   gem 'solargraph', require: false
+  gem 'webdrivers'
+end
+
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+
+  gem 'database_cleaner-active_record'
 end
