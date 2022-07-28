@@ -1,48 +1,65 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  subject { Post.new(title: 'This is my first post', text: 'Nice', likes_counter: 0, comments_counter: 0) }
   before(:all) do
-    Rails.application.load_seed
-  end
-  before { subject.save }
+    @user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.',
+                        posts_counter: 0)
 
-  it 'Title should not be empty or nil' do
-    subject.title = nil
-    expect(subject).to_not be_valid
+    @post = Post.new(title: 'Post Title', text: 'Post text', likes_counter: 2, comments_counter: 3, author: @user)
   end
 
-  it 'Title should not be more than 250 chars' do
-    subject.title = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Quisque accumsan dolor ornare, varius nisi in,
-    aliquet ligula. Nam a erat et est elementum vestibulum. Morbi ligula diam,
-    rhoncus sit amet erat quis, tincidunt aliquam velit.
-    Donec vel ultricies ipsum, vitae pharetra purus. Curabitur bibendum faucibus nulla in congue.
-    Maecenas venenatis ligula ante, sed consectetur urna pharetra vel.
-    Sed sapien quam, consectetur nec euismod id, vulputate a arcu. Nunc vel maximus nulla.
-    Pellentesque mattis massa sed consequat scelerisque. Morbi turpis orci, fringilla id leo et, blandit suscipit purus.
-    Curabitur ante purus, facilisis quis nisl at, porta pulvinar tortor. Integer aliquet sed tellus sed pellentesque.
-    Morbi porta, enim fringilla rhoncus sodales,
-    nunc arcu ullamcorper erat, id tristique turpis lacus sit amet turpis.
-    Vestibulum sagittis rhoncus ex id ultricies. Integer eget fermentum augue.
-    Duis volutpat at libero eu congue. Cras mi magna, commodo sit amet dui id, l
-    aoreet dignissim elit. Sed at iaculis sapien. Integer rhoncus eu sapien eget consequat.'
+  it 'title should be present and not empty' do
+    @post.title = nil
+    expect(@post).not_to be_valid
 
-    expect(subject).to_not be_valid
+    @post.title = ''
+    expect(@post).to_not be_valid
   end
 
-  it 'CommentsCounter should not be below 0' do
-    subject.comments_counter = -1
-    expect(subject).to_not be_valid
+  it 'title should be present' do
+    @post.title = 'Post Title'
+    expect(@post).to be_valid
   end
 
-  it 'LikesCounter should not be below 0' do
-    subject.likes_counter = -1
-    expect(subject).to_not be_valid
+  it 'should return comments_counter greater than or equal to 0' do
+    @post.comments_counter = -15
+    expect(@post).not_to be_valid
+
+    @post.comments_counter = 2
+    expect(@post).to be_valid
+
+    @post.comments_counter = 4
+    expect(@post).to be_valid
   end
 
-  it 'PostsCounter should be 5 ' do
-    posts_count = User.first.posts_counter
-    expect(posts_count).to eq(5)
+  it 'should return likes_counter greater than or equal to 0' do
+    @post.likes_counter = -13
+    expect(@post).to_not be_valid
+
+    @post.likes_counter = 0
+    expect(@post).to be_valid
+
+    @post.likes_counter = 19
+    expect(@post).to be_valid
+  end
+
+  it 'should have likes_counter numericaly' do
+    @post.likes_counter = 'one'
+    expect(@post).to_not be_valid
+
+    @post.likes_counter = 20
+    expect(@post).to be_valid
+  end
+
+  it 'should have title max length 250' do
+    @post.title = 'a' * 251
+    expect(@post).to_not be_valid
+
+    @post.title = 'b' * 250
+    expect(@post).to be_valid
+  end
+
+  it 'comment_counters should return less than 5 comments' do
+    expect(@post.comments_counter).to be < 5
   end
 end

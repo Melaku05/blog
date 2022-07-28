@@ -1,43 +1,62 @@
 require 'rails_helper'
-RSpec.describe 'Test post show page', type: :feature do
-  describe 'GET post show page' do
+
+RSpec.describe 'Post show', type: :feature do
+  describe 'Post' do
     before(:each) do
-      @first_user = User.create(name: 'Lue', photo: 'test_photo.png', bio: 'bio', posts_counter: 0)
+      @first_user = User.create(name: 'Tom', photo: 'margaret.jpeg', bio: 'Teacher from Mexico.', posts_counter: 0)
       @first_user.save!
-      @first_post = Post.create(author: @first_user, title: 'So Awesome', text: 'I am Lue and it is great to be here',
-                                comments_counter: 0, likes_counter: 0, id: 23)
-      @first_comment = Comment.create(post: @first_post, author: @first_user,
-                                      text: 'Hi Lue! So Awesome Great to have you here!')
-      @like = Like.create(post: @first_post, author: @first_user)
+      @second_user = User.create(name: 'Lilly', photo: 'margaret.jpeg', bio: 'Teacher from Poland.', posts_counter: 0)
+      @second_user.save!
+      visit root_path
+
+      @first_post = Post.create(author: @first_user, title: 'Hello', text: 'This is my first post',
+                                comments_counter: 0, likes_counter: 0)
+      @second_post = Post.create(author: @first_user, title: 'Hello, again', text: 'This is my second post',
+                                 comments_counter: 0, likes_counter: 0)
+      @third_post = Post.create(author: @second_user, title: 'Hello', text: 'This is my first post',
+                                comments_counter: 0, likes_counter: 0)
+      @fourth_post = Post.create(author: @second_user, title: 'Hello, again', text: 'This is my second post',
+                                 comments_counter: 0, likes_counter: 0)
+
+      @comment1 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom!')
+      @comment2 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom Again!')
+      @comment3 = Comment.create(post: Post.first, author: User.first, text: 'Hi Tom Again twice!')
+
+      visit user_post_path(@first_user, @first_post)
     end
-    scenario 'shows the correct content' do
-      visit user_post_path(@first_post.author, @first_post)
-      expect(page).to have_content('I am Lue and it is great to be here')
+
+    it 'shows posts title' do
+      expect(page).to have_content('Hello')
     end
-    feature 'User post show page' do
-      background { visit user_post_path(@first_post.author, @first_post) }
-      scenario 'Can see posts title' do
-        @first_post.title = 'So Awesome'
-        expect(page).to have_content('So Awesome')
-      end
-      scenario 'Can see author of post' do
-        expect(page).to have_content('Lue')
-      end
-      scenario 'Can see number of comments' do
-        expect(page).to have_content('Comments: 1')
-      end
-      scenario 'Can see number of likes' do
-        expect(page).to have_content('Likes: 1')
-      end
-      scenario 'Can see post body text' do
-        expect(page).to have_content('great to be here')
-      end
-      scenario 'Can see author of comment' do
-        expect(page).to have_content('Lue')
-      end
-      scenario 'Can see comment text from commenter' do
-        expect(page).to have_content('Great to have you')
-      end
+
+    it 'shows the person who wrote the post' do
+      expect(page).to have_content('Tom')
+    end
+
+    it 'shows number of comments' do
+      post = Post.first
+      expect(page).to have_content(post.comments_counter)
+    end
+
+    it 'shows number of likes' do
+      post = Post.first
+      expect(page).to have_content(post.likes_counter)
+    end
+
+    it 'can see the post\'s body.' do
+      expect(page).to have_content('Hi Tom!')
+    end
+
+    it 'can see the username of each commentor.' do
+      post = Post.first
+      comment = post.comments.first
+      expect(page).to have_content(comment.author.name)
+    end
+
+    it 'can see the comments of each commentor.' do
+      expect(page).to have_content 'Hi Tom!'
+      expect(page).to have_content 'Hi Tom Again!'
+      expect(page).to have_content 'Hi Tom Again twice!'
     end
   end
 end
