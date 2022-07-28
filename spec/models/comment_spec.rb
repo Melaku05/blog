@@ -2,16 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   before(:all) do
-    Rails.application.load_seed
+    @user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
+
+    @post = Post.new(title: 'Post Title', text: 'Post text', likes_counter: 0, comments_counter: 0, author: @user)
   end
 
-  it 'CommentCounter for first user, first post equal 2' do
-    Comment.update_post_comments_counter(User.first.posts.first.id)
-    Comment.update_post_comments_counter(User.first.posts.first.id)
-    Comment.update_post_comments_counter(User.first.posts.first.id)
-    Comment.update_post_comments_counter(User.first.posts.first.id)
-    Comment.update_post_comments_counter(User.first.posts.first.id)
-    comments = User.first.posts.first.comments_counter
-    expect(comments).to eq(14)
+  it 'should return comments_counter incremented by 1' do
+    @post.save
+    @comment = Comment.new(text: 'Comment text', author: @user, post: @post)
+    @comment.save
+    expect(@post.comments_counter).to eq(1)
   end
 end
