@@ -1,14 +1,26 @@
-# blog app
+# Blog App
 
-The Blog app will be a classic example of a blog website. You will create a fully functional website that will show the list of posts and empower readers to interact with them by adding comments and liking posts.
+The Blog app will be a classic example of a blog website. You will create a fully functional website that will show the list of posts and empower readers to interact with them by adding comments and liking posts. 
+
+Project 1: Creating a data model.
+Project 2: Validations and Model specs.
+Project 3: Processing data in models.
+Project 4: Setup and controllers.
+Project 5: Controllers specs.
+Project 6: Views.
+Project 7: Forms.
+Project 8: Integration specs for Views and fixing n+1 problems.
+Project 9: Add Devise.
+Project 10: Add authorization rules.
+Project 11: Add API endpoints.
+Exercise: API documentation.
 
 ## Built With
--Rails
+
 - Ruby
-- Git
-- GitHub
-- VSCode
-- Rubocop
+- Ruby On Rails
+- RSpec
+- PostgreSQL
 
 ## Getting Started
 
@@ -21,7 +33,8 @@ To get a local copy up and running follow these simple example steps.
 ### Install
 
 - Ruby
-
+- Rails
+- PostgreSQL
 
 ### Using it Locally
 
@@ -29,13 +42,15 @@ To get a local copy up and running follow these simple example steps.
 
 git clone https://github.com/Melaku05/blog.git
 
-cd blog
+
+cd blog-app
 
 - To Start the programs
 
 open terminal
 run the command $irb (interactive ruby shell)
 run the program functions
+
 
 ## Authors
 
@@ -44,6 +59,8 @@ run the program functions
 - GitHub: [Melaku05](https://github.com/Melaku05)
 - Twitter: [Melaku](https://twitter.com/melaku_mel)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/melaku-eshetu/)
+
+
 
 ## 🤝 Contributing
 
@@ -57,12 +74,8 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Microverse program
-- My standup team
-- Microverse team
-- My family's support
+- Microverse 
 
 ## 📝 License
 
-This project is open source project.
+This project is [MIT](./LICENSE.md) licensed.
